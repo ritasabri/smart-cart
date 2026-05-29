@@ -1,20 +1,16 @@
-# Shopping List Price Tracker — with QR Code Scanning!
-# Cardozo Education Campus | AP Computer Science Principles
+# Shopping List Price Tracker 
+# Written by Londyn ( python file ) HTML by Miss Sabri 
 
 from pyzbar.pyzbar import decode
 from PIL import Image
 import qrcode
 import os
 
-# Starter shopping list (parallel lists: items[i] matches prices[i])
+# Starter shopping list
 items = ["Milk", "Eggs", "Bread", "Chicken", "Rice"]
 prices = [3.99, 2.50, 4.25, 8.99, 5.49]
 
 
-# This function:
-# - Reads the QR code from an image file
-# - Pulls out the item name and price
-# - Adds them to our shopping list
 def scan_qr_code(image_path, item_list, price_list):
     # Open the QR code image
     image = Image.open(image_path)
@@ -38,7 +34,6 @@ def scan_qr_code(image_path, item_list, price_list):
 
 
 # This function makes a QR code image for one item
-# so students can print them and use them at the expo
 def make_qr_code(item_name, item_price):
     qr_text = item_name + "," + str(item_price)
     qr = qrcode.make(qr_text)
@@ -47,9 +42,7 @@ def make_qr_code(item_name, item_price):
     print("Saved QR code: " + filename)
 
 
-# This function:
-# - Displays the items that fit within the budget
-# - Compares the budget with the item prices
+
 def find_items(item_list, price_list, max_budget):
     found = []
     total = 0
@@ -79,12 +72,12 @@ while running:
     print("6. Quit")
     choice = input("Choose (1-6): ")
 
-    # View the current shopping list
+    
     if choice == "1":
         for i in range(len(items)):
             print(str(i + 1) + ". " + items[i] + " - $" + str(prices[i]))
 
-    # Add a new item by typing it in
+    
     elif choice == "2":
         new_item = input("Item name: ")
         new_price = float(input("Price: "))
@@ -92,23 +85,23 @@ while running:
         prices.append(new_price)
         print(new_item + " added!")
 
-    # Scan a QR code from a saved image file
+    
     elif choice == "3":
         path = input("Enter the QR code filename (example: qr_Milk.png): ")
         scan_qr_code(path, items, prices)
 
-    # Run the budget checker
+    
     elif choice == "4":
         budget = float(input("Enter your max budget: $"))
         find_items(items, prices, budget)
 
-    # Create printable QR codes for every item on the list
+    
     elif choice == "5":
         for i in range(len(items)):
             make_qr_code(items[i], prices[i])
         print("All QR codes saved!")
 
-    # Quit the program
+    
     elif choice == "6":
         print("Goodbye!")
         running = False
